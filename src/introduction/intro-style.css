@@ -3,3 +3,20 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Le bouton Play du menu */
+.menuPlayContainer__P {
+    position : fixed;
+}
+
+.menuPlayContainer__buttonPlay__P {
+    padding: 50px 100px;
+    font-size: 60px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 9999;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
