@@ -5,3 +5,14 @@
     --marron: #562c28;
     --jaune: #feab1f;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#zoomButton {
+    background-color: var(--jaune);
+    position: absolute;
+}
