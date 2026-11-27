@@ -15,8 +15,71 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 9998;
     position: fixed;
     bottom: 16px;
     right: 16px;
 }
+
+/* ==========================================================================
+    MODAL — composant d'affichage d'image en plein écran
+    Utilisé par toutes les pages avec galerie cliquable
+   ========================================================================== */
+
+.modalIntro__P {
+    position : fixed;
+    inset :0;
+    z-index : 9999;
+    background-color : rgb(131 , 131, 131, 0.8);
+    display : none;
+    justify-content : center;
+    padding : 2vh 5vw;
+}
+
+.modalIntro__contain__P {
+    background-image : url(/images/carton-a-dessin.png);
+    background-size : 100%;
+    background-position : center;
+    background-repeat : no-repeat;
+        display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr) ;
+    justify-items: center;
+    align-content: center;
+    padding: 40px;
+
+
+    
+}
+
+.modalIntro__contain__item__P {
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    justify-content : center;
+    padding : 1rem;
+    cursor : pointer;
+}
+
+.modalIntro__contain__item__P:hover {
+    transform : scale(1.1);
+    transition : 0.3s;
+}
+
+
+.modalIntro__contain__item__img__P {
+    width : 75%;
+    border-radius : 4px;
+}
+
+.modalIntro__contain__item__p__P {
+    font-size : 2rem;
+    color : white;
+    text-align : center;
+    padding : 1rem;
+}
+
+
+
+

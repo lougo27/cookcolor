@@ -10,6 +10,8 @@ import { Camera } from './introduction/menu-camera.js';
 
 import { DebugPanel } from './introduction/menu-debug.js';
 
+import { MenuController } from './introduction/menu-controller.js';
+
 // Définition de la classe Application qui gère l'ensemble de l'application 3D.
 class Application {
 // Création d'une scène 3D pour contenir tous les objets, lumières et caméras.
@@ -47,6 +49,8 @@ class Application {
         window.addEventListener("resize", () => {
             this.renderer.setSize(window.innerWidth, window.innerHeight); // Mise à jour de la taille du rendu lorsque la fenêtre est redimensionnée.
         });
+
+        this.menuController = new MenuController(); // Création d'une instance de MenuController pour gérer les interactions avec le menu d'introduction.
     }
 }
 // Création d'une instance de la classe Application pour démarrer l'application 3D.
