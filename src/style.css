@@ -16,3 +16,114 @@ body {
     background-color: var(--jaune);
     position: absolute;
 }
+
+.tabButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    opacity: 0.8;
+}
+
+.tabButton:nth-child(2) {
+    top: 10px;
+    right: 170px;
+}
+
+.tabButton:hover {
+    opacity: 1;
+}
+
+.step {
+    position: absolute;
+    background-color: var(--jaune);
+    top: 50px;
+    left: 50px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.directionalButton {
+    position: relative;
+    background-color: var(--blanc);
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 50%;
+    border: 2px solid var(--jaune);
+    width: 50px;
+    height: 50px;
+}
+
+.innerCircle {
+    position: absolute;
+    background-color: var(--jaune);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.directionalEspaceTravail {
+    position:absolute;
+    top: 250px;
+    right: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+    gap: 10px;
+    display: none; /* Masquer l'élément par défaut */
+}
+
+
+.directionalEspaceTravail p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.directionalEspaceSeche {
+    position:absolute;
+    top: 250px;
+    left: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+    gap: 10px;
+    display: none; /* Masquer l'élément par défaut */
+}
+.directionalEspaceSeche p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.directionalToile {
+    position:absolute;
+    top: 250px;
+    left: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+    gap: 10px;
+    display: none; /* Masquer l'élément par défaut */
+}
+.directionalToile p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
