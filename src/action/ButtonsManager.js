@@ -2,26 +2,27 @@ import '../style.css';
 import * as THREE from "three";
 import { gsap } from "gsap";
 
-import { EspaceTravailRotation } from '../mouvementCam/espaceTravailRotation';
-import { EspaceSecheRotation } from '../mouvementCam/espaceSecheRotation';
 
 export class ButtonsManager {
     constructor(camera, assets) {
         console.log(assets)
         this.config = {
-            right: { camera: { lookAtMesh: assets.tableDroite, position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 } } },
-            left: { camera: { lookAtMesh: assets.tableGauche, position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 } } },
-            center: { camera: { lookAtMesh: assets.toile, position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 } } }
+            right: { camera: { lookAtMesh: assets.tableDroite, position: { x: -0.8, y: 2.5, z: -3 }, rotation: { x: 0, y: 0, z: 0 } } },
+            left: { camera: { lookAtMesh: assets.tableGauche, position: { x: -3, y: 2.5, z: -0.8 }, rotation: { x: 0, y: 0, z: 0 } } },
+            center: { camera: { lookAtMesh: assets.toile, position: { x: -3, y: 2, z: -3 }, rotation: { x: 0, y: 0, z: 0 } } },
+            etagere: { camera: { lookAtMesh: assets.etagere, position: { x: -3, y: 2.5, z: -0.8 }, rotation: { x: 0, y: 0, z: 0 } } }
         }
         this.currentState = "center"
         this.camera = camera;
         this.camera.previousLookAt = new THREE.Vector3(assets.toile.position.x, assets.toile.position.y, assets.toile.position.z);
+        this.camera.previousPosition = new THREE.Vector3(this.config.center.camera.position.x, this.config.center.camera.position.y, this.config.center.camera.position.z);
         this.assets = assets
 
         this.initSelector();
         this.setRotationEspaceTravail();
         this.setRotationEspaceSeche();
         this.setRotationToile();
+        this.setRotationEtagere();
 
         this.directionalEspaceTravail.style.display = "flex";
         this.directionalEspaceSeche.style.display = "flex";
@@ -32,6 +33,7 @@ export class ButtonsManager {
         this.directionalButtonTravail = document.getElementById("directionalButtonTravail");
         this.directionalButtonSeche = document.getElementById("directionalButtonSeche");
         this.directionalButtonToile = document.getElementById("directionalButtonToile");
+        this.etagereButton = document.getElementById("etagereButton");
 
         this.directionalEspaceTravail = document.querySelector(".directionalEspaceTravail");
         this.directionalEspaceSeche = document.querySelector(".directionalEspaceSeche");
@@ -41,38 +43,54 @@ export class ButtonsManager {
 
     setRotation() {
         const initialRotation = new THREE.Vector3(this.camera.previousLookAt.x, this.camera.previousLookAt.y, this.camera.previousLookAt.z);
-        const goalPosition = this.config[this.currentState].camera.lookAtMesh.position
+        const goalPositionRotation = this.config[this.currentState].camera.lookAtMesh.position
         console.log(initialRotation, this.camera.rotation)
 
-        // const rotateAngleY = 0.75
-        // const newCamRotateAngleY = this.camera.rotation.y + rotateAngleY
-        // const rotateAngleX = 0.1
-        // const newCamRotateAngleX = this.camera.rotation.x + rotateAngleX
-        // const rotateAngleZ = 0.1
-        // const newCamRotateAngleZ = this.camera.rotation.z - rotateAngleZ
         gsap.to(initialRotation, {
-            x: goalPosition.x,
-            y: goalPosition.y,
-            z: goalPosition.z,
+            x: goalPositionRotation.x,
+            y: goalPositionRotation.y,
+            z: goalPositionRotation.z,
             duration: 2,
             onUpdate: () => {
                 this.camera.lookAt(initialRotation);
             },
             onComplete: () => {
-                this.camera.previousLookAt = goalPosition
+                this.camera.previousLookAt = goalPositionRotation
             }
         });
-        // gsap.to(this.camera.position, {z: -2, x: -1, y: 2, duration: 2});
+    }
+
+    setPosition() {
+        const initialPosition = new THREE.Vector3(this.camera.previousPosition.x, this.camera.previousPosition.y, this.camera.previousPosition.z);
+        const goalPosition = new THREE.Vector3(this.config[this.currentState].camera.position.x, this.config[this.currentState].camera.position.y, this.config[this.currentState].camera.position.z);
+
+        gsap.to(initialPosition, {
+            x: goalPosition.x,
+            y: goalPosition.y,
+            z: goalPosition.z,
+            duration: 2,
+            onUpdate: () => {
+                this.camera.position.set(initialPosition.x, initialPosition.y, initialPosition.z);
+            },
+            onComplete: () => {
+                this.camera.previousPosition = goalPosition
+            }
+        });
     }
 
     setRotationEspaceTravail() {
-        this.EspaceTravailRotation = new EspaceTravailRotation(this.camera, this.assets.tableGauche);
+        // this.EspaceTravailRotation = new EspaceTravailRotation(this.camera, this.assets.tableGauche);
         this.directionalButtonTravail.addEventListener("click", () => {
             // this.EspaceTravailRotation.setRotation()
             this.currentState = "right"
+            // gsap.to(this.camera.position, {z: -3, x: -0.8, y: 2.5, duration: 2});
+            this.setPosition();
             this.setRotation();
-            this.hideButtons()
+            this.hideButtons();
             this.directionalToile.style.display = "flex";
+            this.directionalToile.classList.remove("right");
+            this.directionalToile.classList.add("left");
+            this.etagereButton.style.display = "flex";
         });
     }
 
@@ -80,9 +98,14 @@ export class ButtonsManager {
         // new EspaceSecheRotation(this.camera, this.assets.tableGauche);
         this.directionalButtonSeche.addEventListener("click", () => {
             this.currentState = "left"
+            // gsap.to(this.camera.position, {z: -0.8, x: -3, y: 2.5, duration: 2});
+            this.setPosition();
             this.setRotation();
             this.hideButtons()
             this.directionalToile.style.display = "flex";
+            this.directionalToile.classList.remove("left");
+            this.directionalToile.classList.add("right");
+        
         });
     }
 
@@ -93,10 +116,23 @@ export class ButtonsManager {
             console.log("click")
 
             this.currentState = "center"
+            // gsap.to(this.camera.position, {z: -3, x: -3, y: 2, duration: 2});
+            this.setPosition();
             this.setRotation();
-            this.hideButtons()
+            this.hideButtons();
             this.directionalEspaceTravail.style.display = "flex";
             this.directionalEspaceSeche.style.display = "flex";
+        });
+    }
+
+    setRotationEtagere() {
+        this.etagereButton.addEventListener("click", () => {
+            this.currentState = "etagere"
+            console.log("click etagere")
+            // this.setPosition();
+            this.setRotation();
+            this.hideButtons();
+            this.directionalToile.style.display = "flex";
         });
     }
 
@@ -104,6 +140,7 @@ export class ButtonsManager {
         this.directionalEspaceTravail.style.display = "none";
         this.directionalEspaceSeche.style.display = "none";
         this.directionalToile.style.display = "none";
+        this.etagereButton.style.display = "none";
     }
 
 

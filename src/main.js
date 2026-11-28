@@ -39,7 +39,7 @@ class Application {
         // Camera
         this.camera.position.set(-10, 3, -10);
         // this.camera.rotation.x = Math.PI;
-        this.camera.lookAt(0, 1.5, 0);
+        // this.camera.lookAt(0, 1.5, 0);
 
         this.assets = [];
 
@@ -57,13 +57,13 @@ class Application {
 
         setTimeout(() => {
 
-
+            this.camera.lookAt(this.assets.toile.position.x, this.assets.toile.position.y, this.assets.toile.position.z);
             this.createHelpers();
 
             // Appel class
             new Zoom(this.camera);
             new Step1(this.camera, this.assets);
-            console.log(this.tableGauche)
+            console.log(this.etagere)
 
             // // Controls
             // this.controls.enablePan = false; // empèche que les gens partent dans le vide 
@@ -98,17 +98,18 @@ class Application {
         // const dracoLoader = new DRACOLoader();
         // this.dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
         // this.loader.setDRACOLoader( dracoLoader );
-        this.gltf = await loader.loadAsync('/glb_fichier/blenderProto.glb');
+        this.gltf = await loader.loadAsync('/glb_fichier/blenderProto2.glb');
         // gsap.to(toileMesh.position, {x: 2, duration: 1, delay: 5})
         // console.log(toileMesh)
-        console.log(this.gltf)
+        console.log(this.gltf.scene.children)
         this.toileMesh = this.gltf.scene.children.find((mesh) => mesh.name === "toile");
         this.tableGauche = this.gltf.scene.children.find((mesh) => mesh.name === "table_gauche");
         this.tableDroite = this.gltf.scene.children.find((mesh) => mesh.name === "table_droite");
+        this.etagere = this.gltf.scene.children.find((mesh) => mesh.name === "beurre");
         this.assets.tableGauche = this.tableGauche
         this.assets.tableDroite = this.tableDroite
         this.assets.toile = this.toileMesh
-        console.log(this.assets)
+        this.assets.etagere = this.etagere
         // gsap.to(toileMesh.position, {x: 2, duration: 1, delay: 5})
         // console.log(toileMesh)
         this.scene.add(this.gltf.scene);
